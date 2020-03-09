@@ -1,7 +1,7 @@
 from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.keys import Keys
-
+import opml
 from secrets import username, password
 
 
@@ -34,9 +34,10 @@ class YoutubeBot():
         sleep(1)
 
     def start_to_subscribe(self):
-        channel_list = ['The Daily Show with Trevor Noah', 'EpicFiveTV']
+        outline = opml.parse('subscription_manager')
 
-        for channel in channel_list:
+        for x in outline[0]:
+            channel = x.title
             # clean search box input
             search_for_input = self.driver.find_element_by_xpath('//*[@id="search"]')
             search_for_input.send_keys(Keys.CONTROL + "a")
